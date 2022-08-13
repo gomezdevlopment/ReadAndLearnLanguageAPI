@@ -21,6 +21,7 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 });
 
+builder.Services.AddCors();
 builder.Services.AddScoped<IUserTextRepository, UserTextRepository>();
 builder.Services.AddScoped<IRepository, UserWordRepository>();
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -37,9 +38,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
 app.UseHttpsRedirection();
+
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 
