@@ -43,5 +43,18 @@ namespace ReadAndLearnLanguageAPI.Controllers
             }
             return Ok();
         }
+
+        [HttpDelete("{textId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteText(int textId)
+        {
+            if (!await _repository.DeleteText(textId))
+            {
+                return StatusCode(500, ModelState);
+            }
+            return Ok();
+        }
     }
 }

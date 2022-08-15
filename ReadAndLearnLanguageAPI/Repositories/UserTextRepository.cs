@@ -19,16 +19,32 @@ namespace ReadAndLearnLanguageAPI.Repositories
             return await _context.Texts.Where(text => text.UserId == userId).ToListAsync();
         }
 
+        public  UserText? GetTextById(int textId)
+        {
+            return  _context.Texts.Single(x => x.TextId == textId);
+        }
+
         public async Task<bool> CreateText(UserText text)
         {
             await _context.AddAsync(text);
-            return Save();
+            return await Save();
         }
 
-        public bool Save()
+        public async Task<bool> DeleteText(int textId)
         {
-            var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
+            var text = GetTextById(textId);
+            if (text != null)
+            {
+                _context.Remove(text);
+                return await Save();
+            }
+            return false;
+        }
+
+        public async Task<bool> Save()
+        {
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

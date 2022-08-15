@@ -7,5 +7,7 @@ namespace ReadAndLearnLanguageAPI.Interfaces
         Task<List<UserText>> GetAllTexts(int userId);
 
         Task<bool> CreateText(UserText text);
+
+        Task<bool> DeleteText(int textId);
     }
 }
